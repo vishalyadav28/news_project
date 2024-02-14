@@ -68,8 +68,155 @@ python manage.py runserver
 │   └── requirements.txt        # Project dependencies
 │
 └── README.md               # Project README file
+```
+
 
 ```
+
+# query {
+# 	votes{
+# 		id
+# 	}
+# }
+
+
+
+#user auth
+
+
+# mutation{ tokenAuth(username:"admin",password:"admin"){ token } }
+
+
+
+#create vote
+
+# mutation{
+#   createVote(linkId: 1){
+#     user{
+#       id username email
+#     }
+#     link{
+#       id url description
+#     }
+#   }
+# }
+
+
+#now check votes on links
+
+# query {
+# 	votes{
+# 		id
+# 		user{
+# 			id
+# 			username
+# 		}
+# 		link{
+# 			url
+# 			description
+# 			id
+# 		}
+# 	}
+# }
+
+
+#check votes by user on link
+
+# query {
+# 	links{
+# 		url
+# 		description
+# 		votes{
+# 			user{
+# 				id
+# 				username
+# 			}
+# 		}
+# 	}
+# }
+
+#check votes on specific link
+
+# search for link
+
+# query {
+# 	links(search: "url",first: 1 ){
+# 		id url description
+# 	}
+# }
+
+
+#relay edges node
+
+
+# query{
+# 	relayLinks{
+# 		edges{
+# 			node{
+# 				id url description
+# 				votes{
+# 					edges{
+# 						node{
+# 							id user{
+# 								id
+# 							}
+# 						}
+# 					}
+# 				}
+# 			}
+# 		}
+# 	}
+# }
+
+
+#pagination
+
+# query {
+# 	relayLinks(first: 1){
+# 		edges{
+# 			node{
+# 				id url description
+# 			}
+# 		}
+# 		pageInfo{
+# 			startCursor
+# 			hasNextPage
+# 			endCursor
+# 		}
+# 	}
+# }
+
+
+# search only using id
+
+# query {
+#   relayLinks(id: 1) {
+#     edges {
+#       node {
+#         id
+#         url
+#         description
+#       }
+#     }
+#   }
+# }
+
+
+#mutation using relay
+
+mutation {
+	relayCreateLink(input: {
+		url:"https://google.com",
+		description:"google search engine"
+	})
+	{
+		link{
+			id url description
+		}
+	}
+}
+```
+
 ### suggestions are appreciated..............keep coding
  
 
